@@ -11,13 +11,15 @@
  *
  * */
 
-import java.util.HashMap;
-
 public class Main {
     /*
     * 算法思路：
     *    链表本身是从低位向高位存储，因此按顺序相加即可。通过一个bool保存进位信息，
     * 以完成整个加法过程。
+    *
+    *    可以通过两个指针，分别指向两个链表，不断地同时向后移，并计算对应位相加、
+    * 上一位进位以及是否产生进位等。当某一链表指针已经移动到最后，则该计算时忽略该
+    * 链表。当两个链表都移动到最后一位，则跳出循环，计算完毕。
     *
     *  */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
@@ -36,7 +38,9 @@ public class Main {
         // 加法过程
         int sum;
         while(l1 != null || l2 !=null){
+            // 当前位相加的和初始化
             sum = 0;
+            // 防止l1和l2不存在当前位的情况
             if(l1 != null){
                 sum += l1.val;
                 l1 = l1.next;
@@ -45,9 +49,11 @@ public class Main {
                 sum += l2.val;
                 l2 = l2.next;
             }
+            // 进位信息
             if(carry)
                 sum++;
 
+            // 是否产生进位
             if(sum>9){
                 carry = true;
                 sum = sum%10;
@@ -55,11 +61,14 @@ public class Main {
                 carry = false;
             }
 
+            // 将求和的值保存到下一个节点
             head.next = new ListNode(sum);
             head = head.next;
         }
+        // 判断最后会不会产生一个最高位的进位
         if(carry)
             head.next = new ListNode(1);
+        // 头结点中无信息，跳过该结点
         return ret.next;
     }
 
