@@ -36,34 +36,35 @@ public class Main {
      *
      *  */
     public static String convert(String s, int numRows) {
-        // 异常输入
-        if (s == null || s.length() == 0 || numRows <= 0)
-            return "";
-
-        if (numRows == 1)
-            return s;
-
-        int index;          // 每个子结构的首字母在字符串中的索引
-        int length = s.length();
-        StringBuilder res = new StringBuilder();
-        for (int i=0; i<numRows; i++){
-            index = 0;
-            while (true){
-                if (index+i >= length)
-                    break;
-                res.append(s.charAt(index+i));
-                // 如果当前行不是第一行或最后一行，应该有第二个元素
-                if (i != 0 && i != numRows-1){
-                    int next = index+2*numRows-1-i;
-                    if (next >= length)
+        public static String convert(String s, int numRows) {
+            // 异常输入
+            if (s == null || s.length() == 0 || numRows <= 0)
+                return "";
+            
+            if (numRows == 1)
+                return s;
+            
+            int index;          // 每个子结构的首字母在字符串中的索引
+            int length = s.length();
+            StringBuilder res = new StringBuilder();
+            for (int i=0; i<numRows; i++){
+                index = 0;
+                while (true){
+                    if (index+i < length)
+                        res.append(s.charAt(index+i));
+                    // 如果当前行不是第一行或最后一行，应该有第二个元素
+                    if (i != 0 && i != numRows-1){
+                        int next = index+2*numRows-2-i;
+                        if (next < length)
+                            res.append(s.charAt(next));
+                    }
+                    index += 2*numRows-2;
+                    if (index >= length)
                         break;
-                    res.append(s.charAt(index+2*numRows-2-i));
                 }
-                index += 2*numRows-2;
             }
+            return res.toString();
         }
-        return res.toString();
-    }
 
     public static void main(String[] args) {
         System.out.println(convert("PAYPALISHIRING", 3));
