@@ -15,7 +15,7 @@ HashMap和HashTable实现原理类似(拉链法)，链表过长会转换为红�
 
 5. 各种锁<br>
 参考: 
-[Java中的锁分类 - byhieg - 博客园](https://www.cnblogs.com/qifengshi/p/6831055.html)
+[Java中的锁分类 - byhieg - 博客园](https://www.cnblogs.com/qifengshi/p/6831055.html)<br>
 [java 中的锁 -- 偏向锁、轻量级锁、自旋锁、重量级锁 - 简书](https://www.jianshu.com/p/78cf35f01b2f)
 
 ## 操作系统相关
