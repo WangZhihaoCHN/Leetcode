@@ -7,3 +7,6 @@ gen
 # Maven相关
 target
 mvnw*
+
+#MacOS
+.DS_Store
