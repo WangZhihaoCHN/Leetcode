@@ -1,6 +1,8 @@
 package com.wzh.leetcode.solution;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 3.无重复字符的最长子串 LengthOfLongestSubstring
@@ -16,6 +18,7 @@ import java.util.HashMap;
 public class LengthOfLongestSubstring_3 {
     /*
      * 算法思路：
+     *
      *    利用一前一后两个指针(start,end)，后指针依次扫描字符串中的元素。
      * 当end遇到和之前重复的字符时(记前一次出现的下标为Occur1, 本次出现的下标为Occur2)，
      * 即遇到了一个可能的最大值，将其与之前的最大值进行比较，记录保存较大者。
@@ -56,10 +59,42 @@ public class LengthOfLongestSubstring_3 {
         return maxLength;
     }
 
+    /**
+     * 算法思路：
+     * 滑动窗口
+     * 一左一右两个指针标识子串的左右边界，左指针向右移动一格，
+     * 表示我们开始枚举以下一个字符为起始点的最长子串，此时，
+     * 右指针不断向右移动，直到出现重复字符则停止。
+     * 我们可以用hash set存储左右指针之间的字符，当左指针向后移动，
+     * 从set中移除一个字符，当右指针向后移动，往set中添加一个字符。
+     */
+    public static int lengthOfLongestSubstringV2(String s) {
+        // 当前子串字符集
+        Set<Character> hashSet = new HashSet<>();
+        // 初始化右指针
+        int ans = 0;
+        for (int left = 0, right = 0; left < s.length(); left++) {
+            // 左指针后移，hash set中移除一个元素
+            if (left != 0) {
+                hashSet.remove(s.charAt(left - 1));
+            }
+            // 右指针不断后移，如果hash set中不存在，添加元素到set中
+            while (right < s.length() && !hashSet.contains(s.charAt(right))) {
+                hashSet.add(s.charAt(right));
+                right++;
+            }
+            // 判断当前子串是否更长
+            ans = Math.max(ans, right - left);
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
+        System.out.println(lengthOfLongestSubstringV2("dvdf"));
+        System.out.println(lengthOfLongestSubstring("dvdf"));
+        System.out.println(lengthOfLongestSubstringV2("abcabcbb"));
         System.out.println(lengthOfLongestSubstring("abcabcbb"));
-        System.out.println(lengthOfLongestSubstring("bbbbb"));
+        System.out.println(lengthOfLongestSubstringV2("pwwkew"));
         System.out.println(lengthOfLongestSubstring("pwwkew"));
-        System.out.println(lengthOfLongestSubstring("c"));
     }
 }
